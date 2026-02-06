@@ -1,0 +1,30 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: loterias_db
+    environment:
+      POSTGRES_DB: loterias
+      POSTGRES_USER: loteria
+      POSTGRES_PASSWORD: loteria123
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  api:
+    image: node:22
+    container_name: loterias_api
+    working_dir: /app
+    volumes:
+      - ./api:/app
+    environment:
+      PORT: 3000
+      DATABASE_URL: postgres://loteria:loteria123@postgres:5432/loterias
+    command: sh -c "npm install && node index.js"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+
+volumes:
+  pgdata:
