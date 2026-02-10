@@ -567,7 +567,7 @@ function generateExtraNumbers(config, analysis, usedExtras = []) {
   // Completar con aleatorios
   while (extraNumbers.length < count) {
     const num = Math.floor(Math.random() * (max - min + 1)) + min;
-    if (!extraNumbers.includes(num) && !usedExtras.includes(num)) {
+    if (!extraNumbers.includes(num)) {
       extraNumbers.push(num);
     }
   }

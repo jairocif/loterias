@@ -44,7 +44,6 @@ async function generateIntelligentPlays(gameCode, playsCount = 5) {
 
     const plays = [];
     const usedCombinations = new Set();
-const usedExtras = [];
 
     for (let i = 0; i < Math.min(playsCount, strategies.length); i++) {
       const strategy = strategies[i];
@@ -53,7 +52,7 @@ const usedExtras = [];
 
       // Evitar jugadas duplicadas
       do {
-        play = generateSinglePlay(config, analysis, strategy.type, usedExtras);
+        play = generateSinglePlay(config, analysis, strategy.type);
         attempts++;
       } while (
         usedCombinations.has(play.mainNumbers.join(',')) &&
@@ -270,7 +269,7 @@ function analyzeData(historicalData, config) {
 /**
  * GENERAR UNA JUGADA SEGÚN ESTRATEGIA
  */
-function generateSinglePlay(config, analysis, strategyType, usedExtras = []) {
+function generateSinglePlay(config, analysis, strategyType) {
   const mainCount = config.mainNumbers.count;
   const mainMin = config.mainNumbers.min;
   const mainMax = config.mainNumbers.max;
@@ -461,7 +460,7 @@ function generateSinglePlay(config, analysis, strategyType, usedExtras = []) {
   }
 
   // Generar números extra (usando datos históricos si hay)
-  const extraNumbers = generateExtraNumbers(config, analysis, usedExtras);
+  const extraNumbers = generateExtraNumbers(config, analysis);
 
   return {
     mainNumbers,
@@ -543,7 +542,7 @@ function generateRandomNumbers(count, min, max, allowRepeated) {
 /**
  * GENERAR NÚMEROS EXTRA (con análisis histórico)
  */
-function generateExtraNumbers(config, analysis, usedExtras = []) {
+function generateExtraNumbers(config, analysis) {
   if (config.extraNumbers.count === 0) return [];
 
   const extraNumbers = [];
@@ -567,7 +566,7 @@ function generateExtraNumbers(config, analysis, usedExtras = []) {
   // Completar con aleatorios
   while (extraNumbers.length < count) {
     const num = Math.floor(Math.random() * (max - min + 1)) + min;
-    if (!extraNumbers.includes(num) && !usedExtras.includes(num)) {
+    if (!extraNumbers.includes(num)) {
       extraNumbers.push(num);
     }
   }

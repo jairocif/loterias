@@ -543,7 +543,7 @@ function generateRandomNumbers(count, min, max, allowRepeated) {
 /**
  * GENERAR NÚMEROS EXTRA (con análisis histórico)
  */
-function generateExtraNumbers(config, analysis, usedExtras = []) {
+function generateExtraNumbers(config, analysis) {
   if (config.extraNumbers.count === 0) return [];
 
   const extraNumbers = [];
@@ -567,7 +567,7 @@ function generateExtraNumbers(config, analysis, usedExtras = []) {
   // Completar con aleatorios
   while (extraNumbers.length < count) {
     const num = Math.floor(Math.random() * (max - min + 1)) + min;
-    if (!extraNumbers.includes(num) && !usedExtras.includes(num)) {
+    if (!extraNumbers.includes(num)) {
       extraNumbers.push(num);
     }
   }
