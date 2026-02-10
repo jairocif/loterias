@@ -10,7 +10,7 @@ function Generator({ game, gameName, onBack }) {
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:3000/generate', {
+      const response = await fetch('https://loterias-production-2450.up.railway.app/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
